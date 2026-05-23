@@ -82,9 +82,11 @@ def predict_genres(params: dict) -> dict:
         proba_final      = w1 * proba_tfidf + w2 * proba_emb
     else:
         proba_final      = proba_tfidf   # fallback: solo Exp1
-
-    return {genre: round(float(p), 6)
-            for genre, p in zip(GENRE_NAMES, proba_final)}
+    
+    result = {genre: round(float(p), 6)
+          for genre, p in zip(GENRE_NAMES, proba_final)}
+    
+    return dict(sorted(result.items(), key=lambda x: x[1], reverse=True))
 
 
 if __name__ == '__main__':
