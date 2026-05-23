@@ -22,39 +22,10 @@ parser.add_argument('plot',  type=str, required=True,
 parser.add_argument('year',  type=int, required=True,
                     help='Release year (e.g. 1995)',     location='args')
 
-# Respuesta: probabilidad [0-1] para cada uno de los 24 géneros
-resource_fields = api.model('Resource', {
-    'Action':       fields.Float,
-    'Adventure':    fields.Float,
-    'Animation':    fields.Float,
-    'Biography':    fields.Float,
-    'Comedy':       fields.Float,
-    'Crime':        fields.Float,
-    'Documentary':  fields.Float,
-    'Drama':        fields.Float,
-    'Family':       fields.Float,
-    'Fantasy':      fields.Float,
-    'Film-Noir':    fields.Float,
-    'History':      fields.Float,
-    'Horror':       fields.Float,
-    'Music':        fields.Float,
-    'Musical':      fields.Float,
-    'Mystery':      fields.Float,
-    'News':         fields.Float,
-    'Romance':      fields.Float,
-    'Sci-Fi':       fields.Float,
-    'Short':        fields.Float,
-    'Sport':        fields.Float,
-    'Thriller':     fields.Float,
-    'War':          fields.Float,
-    'Western':      fields.Float,
-})
-
 @ns.route('/')
 class MovieGenreApi(Resource):
 
     @api.doc(parser=parser)
-    @api.marshal_with(resource_fields)
     def get(self):
         args = parser.parse_args()
         return predict_genres(args), 200
